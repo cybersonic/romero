@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!--ant-->
+<project name="Romero" basedir="." default="help">
+	 <path id="jetty.plugin.classpath">
+	    <fileset dir="lib" includes="*.jar"/>
+	  </path>
+	  <taskdef classpathref="jetty.plugin.classpath" resource="tasks.properties" loaderref="jetty.loader" />
+	
+	<target name="help" >
+			<echo message="Welcome to Romero"/>
+			<echo message=""/>
+			<echo message="Romero supports the following commands:"/>
+			<echo message=""/>
+			<echo message="romero create applicationName"/>
+			<echo message=" This creates an application in the current folder with the name applicationName"/>
+			<echo message=""/>
+			<echo message="romero run"/>
+			<echo message=" Run from inside your applicationfolder, it will start up a server at http://localhost:8080"/>		
+	</target>
+	
+	
+	<target name="create" >
+		
+		<mkdir dir="${callingPath}/${action}"/>
+		<copy todir="${callingPath}/${action}">
+			<fileset dir="${basedir}/frameworks/fw1" />
+		</copy>
+		
+	</target>
+	
+	<target name="run">
+		 <jetty jettyXml="${basedir}/server.xml">
+		 	<systemProperties>
+		 	    <systemProperty name="user_deploy_dir" value="${callingPath}/www"/>
+		 		 <systemProperty name="jettydir" value="${basedir}"/>
+		 	  </systemProperties>
+		 		
+		 </jetty>
+	</target>
+
+</project>

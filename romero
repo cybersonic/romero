@@ -1,0 +1,5 @@
+#!/bin/sh
+prog_path=$(pwd)
+TARGET=$1
+ : ${TARGET:="help"}
+ant -buildfile $ROMERO_HOME/build.xml -DcallingPath=$prog_path -Daction=$2 $TARGET
