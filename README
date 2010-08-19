@@ -1,5 +1,22 @@
 Romero is a command line utility to quickly build CFML Applications
 
 
-Installation
+Installation (OS X)
 
+1) Copy down the Romero package (or clone it) and install it to path , for example on OS /Appliations/Romero
+2) Edit your ~/bash_profile and add the following lines
+	export ROMERO_HOME="/Applications/Romero"
+	export PATH=$PATH:$ROMERO_HOME
+	
+3) to reload your settings type:
+	source ~/.bash_profile
+	
+
+
+Running
+
+You should now have access from anywhere in your system to run "romero <command>"
+
+Current commands are:
+	romero create MyApplication
+	romero run
