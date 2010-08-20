@@ -1,9 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?><!--ant-->
+<?xml version="1.0" encoding="UTF-8"?>
 <project name="Romero" basedir="." default="help">
 	 <path id="jetty.plugin.classpath">
 	    <fileset dir="lib" includes="*.jar"/>
 	  </path>
 	  <taskdef classpathref="jetty.plugin.classpath" resource="tasks.properties" loaderref="jetty.loader" />
+	
+	 <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+	   <classpath>
+	     <pathelement location="${basedir}/ant_libs/ant-contrib-1.0b3.jar"/>
+	   </classpath>
+	 </taskdef>
+	
 	
 	<target name="help" >
 			<echo message="Welcome to Romero"/>
@@ -25,16 +32,41 @@
 			<fileset dir="${basedir}/frameworks/fw1" />
 		</copy>
 		
+<echo file="${callingPath}/${action}/.project"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>${action}</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+		<nature>org.cfeclipse.cfml.CFENature</nature>
+	</natures>
+</projectDescription>]]>
+</echo>
+		
+		
 	</target>
 	
 	<target name="run">
-		 <jetty jettyXml="${basedir}/server.xml">
-		 	<systemProperties>
-		 	    <systemProperty name="user_deploy_dir" value="${callingPath}/www"/>
-		 		 <systemProperty name="jettydir" value="${basedir}"/>
-		 	  </systemProperties>
-		 		
-		 </jetty>
+		<available file="${callingPath}/www" property="www.root"/>
+
+		<if>
+		  <equals arg1="${www.root}" arg2="true"/>
+		  <then>
+		 	<jetty jettyXml="${basedir}/server.xml">
+		 		<systemProperties>
+		 	    	<systemProperty name="user_deploy_dir" value="${callingPath}/www"/>
+		 		 	<systemProperty name="jettydir" value="${basedir}"/>
+		 	  	</systemProperties>
+		 	</jetty>
+		  </then>
+		  <else>
+			<echo message="You are not in a project directory" />
+		  </else>
+		</if>
+		
 	</target>
 
 </project>
